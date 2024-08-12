@@ -1,5 +1,9 @@
 function validarEdad() {
     const edad = parseInt(document.getElementById('edad').value);
+    const nombreApellido = document.getElementById('nombre-apellido').value;
+
+    localStorage.setItem('nombre-apellido', nombreApellido);
+    localStorage.setItem('edad', edad);
 
     if (edad >= 18) {
         Swal.fire({
@@ -17,3 +21,4 @@ function validarEdad() {
 }
 
 document.getElementById("Validar").addEventListener("click", validarEdad);
+
