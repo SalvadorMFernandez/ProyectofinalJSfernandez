@@ -1,0 +1,31 @@
+[
+    {
+      "id": 1,
+      "title": "Dolar",
+      "description": "Moneda oficial Estadounidense",
+      "price": 1450,
+      "image": "https://img.freepik.com/foto-gratis/numero-banco_1232-3931.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Euro",
+      "description": "Moneda oficial Europea",
+      "price": 1633,
+      "image": "https://www.ceca.es/wp-content/uploads/2023/08/euros.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Real",
+      "description": "Moneda oficial Brasileña",
+      "price": 257,
+      "image": "https://media.istockphoto.com/id/1322173172/es/foto/en-esta-ilustración-fotográfica-se-muestran-ciento-doscientos-reales-y-una-moneda-de-un-real.jpg?s=612x612&w=0&k=20&c=9pG2yxdpFYe9j2oKboOqvwU9skbokYaIFW9Xn48FH_Y="
+    },
+    {
+      "id": 4,
+      "title": "Peso Uruguayo",
+      "description": "Moneda oficial Uruguaya",
+      "price": 29,
+      "image": "https://st3.depositphotos.com/2870309/17334/i/450/depositphotos_173341030-stock-photo-uruguayan-pesos-a-background.jpg"
+    }
+  ]
+  

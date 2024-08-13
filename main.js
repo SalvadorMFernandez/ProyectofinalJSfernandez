@@ -1,57 +1,71 @@
-const divisas = [
-    { id: 1, nombre: "Dolar", descripcion: "Moneda oficial Estadounidense", precio: 1450, imagen: "https://img.freepik.com/foto-gratis/numero-banco_1232-3931.jpg" },
-    { id: 2, nombre: "Euro", descripcion: "Moneda oficial Europea", precio: 1633, imagen: "https://www.ceca.es/wp-content/uploads/2023/08/euros.jpg" },
-    { id: 3, nombre: "Real", descripcion: "Moneda oficial Brasileña", precio: 257, imagen: "https://media.istockphoto.com/id/1322173172/es/foto/en-esta-ilustración-fotográfica-se-muestran-ciento-doscientos-reales-y-una-moneda-de-un-real.jpg?s=612x612&w=0&k=20&c=9pG2yxdpFYe9j2oKboOqvwU9skbokYaIFW9Xn48FH_Y=" },
-    { id: 4, nombre: "Peso Uruguayo", descripcion: "Moneda oficial Uruguaya", precio: 29, imagen: "https://st3.depositphotos.com/2870309/17334/i/450/depositphotos_173341030-stock-photo-uruguayan-pesos-a-background.jpg" }
-];
+const jsonUrl = 'divisas.json'; 
 
-function renderDivisas() {
-    let contenidoHTML = '<div class="row">'; 
+// Función para obtener datos del archivo JSON local
+async function fetchDivisas() {
+  try {
+    const response = await fetch(jsonUrl);
+    if (!response.ok) {
+      throw new Error('La respuesta de la red no es correcta');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Hubo un problemacon la recuperacion:', error);
+    return [];
+  }
+}
 
-    for (const divisa of divisas) {
-        contenidoHTML += `<div class="col-md-3 mb-4">
-            <div class="card border-0">
-                <img src="${divisa.imagen}" class="card-img-top" alt="${divisa.nombre}">
-                <div class="card-body text-center">
-                    <p class="card-text">${divisa.nombre}<br><span class="text-danger">$${divisa.precio} ARS</span></p>
-                    <p class="card-text"><button class="btn btn-light rounded-pill" onclick="agregarDivisa(${divisa.id})">Agregar (+)</button></p>
-                </div>
+// Función para renderizar divisas en la página
+async function renderDivisas() {
+  const divisas = await fetchDivisas(); 
+  let contenidoHTML = '<div class="row">'; 
+
+  for (const divisa of divisas) {
+    contenidoHTML += `<div class="col-md-3 mb-4">
+        <div class="card border-0">
+            <img src="${divisa.image}" class="card-img-top" alt="${divisa.title}">
+            <div class="card-body text-center">
+                <p class="card-text">${divisa.title}<br><span class="text-danger">$${divisa.price} ARS</span></p>
+                <p class="card-text"><button class="btn btn-light rounded-pill" onclick="agregarDivisa(${divisa.id})">Agregar (+)</button></p>
             </div>
-        </div>`;
-    }
+        </div>
+    </div>`;
+  }
 
-    contenidoHTML += '</div>'; 
+  contenidoHTML += '</div>'; 
 
-    document.getElementById("contenido").innerHTML = contenidoHTML;
+  document.getElementById("contenido").innerHTML = contenidoHTML;
 }
 
+// Función para agregar una divisa al carrito
 function agregarDivisa(id) {
-    const divisa = divisas.find(item => item.id === id);
-    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    carrito.push(divisa);
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-    console.log("La divisa se agregó");
-    totalProductos();
+  const divisa = divisas.find(item => item.id === id);
+  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  carrito.push(divisa);
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  console.log("La divisa se agregó");
+  totalProductos();
 }
 
+// Función para mostrar el número total de productos en el carrito
 function totalProductos() {
-    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    document.getElementById("totalCarrito").innerHTML = carrito.length;
+  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  document.getElementById("totalCarrito").innerHTML = carrito.length;
 }
 
+// Función para mostrar la fecha y hora actual
 function obtenerFecha() {
-    const campoFecha = document.getElementById("fecha");
-    const { DateTime } = luxon;
-    const now = DateTime.now().toLocaleString(DateTime.DATETIME_FULL);
-    if (campoFecha) {
-        campoFecha.innerHTML = now;
-    } else {
-        console.error("El elemento con id 'fecha' no se encuentra.");
-    }
+  const { DateTime } = luxon;
+  const now = DateTime.now().toLocaleString(DateTime.DATETIME_FULL);
+  const campoFechaHora = document.getElementById("fechaHora");
+
+  if (campoFechaHora) {
+    campoFechaHora.innerHTML = `Fecha y hora actual: ${now}`;
+  } else {
+    console.error("El elemento con id 'fechaHora' no se encuentra.");
+  }
 }
 
-// Inicializar
 renderDivisas();
 totalProductos();
 obtenerFecha();
-
